@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="bi bi-plus-circle"></i> Добавить устройство</h2>
+    
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Шаг 1: Выбор типа -->
+            <div class="mb-4">
+                <h5>1. Тип устройства</h5>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card device-type">
+                            <div class="card-body text-center">
+                                <i class="bi bi-lightbulb fs-1"></i>
+                                <p>Лампа</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Другие типы устройств -->
+                </div>
+            </div>
+
+            <!-- Шаг 2: Настройки -->
+            <div class="mb-3">
+                <h5>2. Параметры</h5>
+                <div class="mb-3">
+                    <label class="form-label">Название</label>
+                    <input type="text" class="form-control" placeholder="Кухонный свет">
+                </div>
+                <div class="alert alert-warning">
+                    <i class="bi bi-search"></i> Имитация поиска устройств...
+                </div>
+            </div>
+
+            <button class="btn btn-success" onclick="alert('Устройство успешно добавлено!')">
+                <i class="bi bi-check-circle"></i> Подключить
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.device-type:hover {
+    cursor: pointer;
+    background: #f8f9fa;
+}
+</style>
+{% endblock %}

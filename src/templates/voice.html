@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5>Голосовое управление</h5>
+            </div>
+            <div class="card-body text-center">
+                <button id="voiceBtn" class="btn btn-primary btn-lg">
+                    <i class="bi bi-mic"></i> Нажмите и говорите
+                </button>
+                <div id="voiceResult" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const voiceBtn = document.getElementById('voiceBtn');
+    const voiceResult = document.getElementById('voiceResult');
+    
+    voiceBtn.addEventListener('click', function() {
+        if (!('webkitSpeechRecognition' in window)) {
+            voiceResult.innerHTML = '<div class="alert alert-warning">Ваш браузер не поддерживает голосовое управление</div>';
+            return;
+        }
+        
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'ru-RU';
+        
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            voiceResult.innerHTML = `<div class="alert alert-info">Распознано: ${transcript}</div>`;
+            
+            // Обработка команд
+            if (transcript.includes('включи свет')) {
+                fetch('/api/devices/1/turn_on');
+            } else if (transcript.includes('выключи свет')) {
+                fetch('/api/devices/1/turn_off');
+            }
+        };
+        
+        recognition.start();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Управление устройствами</h2>
+    
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Список устройств</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Тип</th>
+                            <th>Статус</th>
+                            <th>Расположение</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for device in devices %}
+                        <tr>
+                            <td>{{ device.id }}</td>
+                            <td>{{ device.name }}</td>
+                            <td>{{ device.type }}</td>
+                            <td>
+                                <span class="badge bg-{% if device.status == 'on' %}success{% else %}secondary{% endif %}">
+                                    {{ device.status }}
+                                </span>
+                            </td>
+                            <td>{{ device.location }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button onclick="toggleDevice({{ device.id }}, 'on')" 
+                                            class="btn btn-outline-success {% if device.status == 'on' %}disabled{% endif %}">
+                                        Вкл
+                                    </button>
+                                    <button onclick="toggleDevice({{ device.id }}, 'off')" 
+                                            class="btn btn-outline-danger {% if device.status == 'off' %}disabled{% endif %}">
+                                        Выкл
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleDevice(deviceId, action) {
+    fetch(`/api/devices/${deviceId}/${action === 'on' ? 'turn_on' : 'turn_off'}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.reload();
+            }
+        });
+}
+</script>
+{% endblock %}
