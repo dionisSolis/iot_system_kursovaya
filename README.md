@@ -1,5 +1,4 @@
-# IoT Control System
-Система управления IoT устройствами для локальных сетей
+# IoT Control System Система управления IoT устройствами для локальных сетей
 ## Структура проекта
 iot_system_kursovaya/
 - │ .gitignore
@@ -61,7 +60,6 @@ SESSION_PROTECTION=strong
 6. **Запуск системы**  
 Выполните:  
 `python src/app.py`
-
 7. **Доступ к системе**  
 Откройте в браузере:  
 `http://localhost:5000`
